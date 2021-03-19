@@ -6,6 +6,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.util.stream.IntStream;
 
 import static org.junit.Assert.*;
 
@@ -110,5 +111,49 @@ public class BinSearchTest {
 
         System.setOut(out);
         System.setIn(in);
+    }
+
+    @Test
+    public void binSearchRecLessElemTime() {
+        int[] values = IntStream.range(0, 1000000000).toArray();
+        int element = -1;
+
+        boolean result = BinSearch._binSearchRec(values, 0, values.length, element);
+        final boolean expected = false;
+
+        assertEquals(result, expected);
+    }
+
+    @Test
+    public void binSearchCircleLessElemTime() {
+        int[] values = IntStream.range(0, 1000000000).toArray();
+        int element = -1;
+
+        boolean result = BinSearch._binSearchCircle(values, 0, values.length, element);
+        final boolean expected = false;
+
+        assertEquals(result, expected);
+    }
+
+    @Test
+    public void binSearchRecMoreElemTime() {
+        int[] values = IntStream.range(0, 1000000000).toArray();
+        int element = values.length + 1;
+
+        boolean result = BinSearch._binSearchRec(values, 0, values.length, element);
+        final boolean expected = false;
+
+        assertEquals(result, expected);
+    }
+
+    @Test
+    public void binSearchCircleMoreElemTime() {
+        int[] values = IntStream.range(0, 1000000000).toArray();
+        int element = values.length + 1;
+
+        boolean result = BinSearch._binSearchCircle(values, 0, values.length, element);
+        final boolean expected = false;
+
+        assertEquals(result, expected);
     }
 }
