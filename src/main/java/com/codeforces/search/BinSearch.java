@@ -1,8 +1,11 @@
 package com.codeforces.search;
 
-import java.util.Scanner;
+import java.io.*;
 
 public class BinSearch {
+
+    static private StreamTokenizer in;
+    static private PrintWriter out;
 
     static boolean _binSearchRec(int[] values, int start, int finish, int element) {
         if (finish - start == 1) {
@@ -52,27 +55,40 @@ public class BinSearch {
 //        return _binSearchRec(values, start, finish, element);
     }
 
-    public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
-        int sizeArrays = input.nextInt();
-        int countElem = input.nextInt();
+    static private int nextInt() throws IOException {
+        in.nextToken();
+        return (int)in.nval;
+    }
 
-        int[] values = new int[sizeArrays];
-        for(int i = 0; i < sizeArrays; ++i) {
-            values[i] = input.nextInt();
-        }
+    public static void main(String[] args)  {
+        try {
+            in = new StreamTokenizer(new BufferedReader(new InputStreamReader(System.in)));
+            out = new PrintWriter(System.out);
 
-        int[] elems = new int[countElem];
-        for(int i = 0; i < countElem; ++i) {
-            elems[i] = input.nextInt();
-        }
+            int sizeArrays = BinSearch.nextInt();
+            int countElem = BinSearch.nextInt();
 
-        for (int value : elems) {
-            if (binSearch(values, value)) {
-                System.out.println("YES");
-            } else {
-                System.out.println("NO");
+            int[] values = new int[sizeArrays];
+            for (int i = 0; i < sizeArrays; ++i) {
+                values[i] = BinSearch.nextInt();
             }
+
+            int[] elems = new int[countElem];
+            for (int i = 0; i < countElem; ++i) {
+                elems[i] = BinSearch.nextInt();
+            }
+
+            for (int value : elems) {
+                if (binSearch(values, value)) {
+                    out.println("YES");
+                } else {
+                    out.println("NO");
+                }
+            }
+
+            out.flush();
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 }
