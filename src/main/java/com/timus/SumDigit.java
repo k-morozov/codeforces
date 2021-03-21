@@ -35,10 +35,11 @@ public class SumDigit {
 }
 
 class Finder {
-    private int valueSumma;
-    private int valueMultiply;
+    private final int valueSumma;
+    private final int valueMultiply;
     private int currentLength;
     private int[] number;
+
     private int currentSumma = 0;
     private int currentSumDbl = 0;
 
@@ -54,55 +55,35 @@ class Finder {
             return "No solution";
         }
 
-        while ((currentSumma != valueSumma || currentSumDbl != valueMultiply) && currentLength < 100) {
+        while ((currentSumDbl != valueMultiply || currentSumma != valueSumma) && currentLength < 100) {
             number = nextFind();
-
-            currentSumma = getSumma();
-            currentSumDbl = getSummaDbl();
         }
         return toNumber();
     }
 
     private int[] nextFind() {
-        boolean isDone = false;
+        boolean needMore = true;
         for (int i = 0; i <= currentLength; i++) {
             if(number[i] != 9) {
-                if (getSumma() < valueSumma && getSummaDbl() < valueMultiply) {
+                if (currentSumDbl < valueMultiply && currentSumma < valueSumma) {
                     ++number[i];
-                    isDone = true;
+                    ++currentSumma;
+                    currentSumDbl = currentSumDbl - ((number[i] - 1) * (number[i]-1)) + number[i] * number[i];
+
+                    needMore = false;
                     break;
                 }
             }
+            currentSumma = currentSumma - number[i];
+            currentSumDbl = currentSumDbl - number[i] * number[i];
             number[i] = 0;
         }
-        if (!isDone) {
+        if (needMore) {
             ++currentLength;
         }
         return number;
     }
 
-    private int getSumma() {
-        int summa = 0;
-        for (int i = 0; i <= currentLength; i++) {
-            summa += number[i];
-        }
-        return summa;
-//        return number.stream()
-//                .reduce(Integer::sum)
-//                .get();
-    }
-
-    private int getSummaDbl() {
-        int summa = 0;
-        for (int i = 0; i <= currentLength; i++) {
-            summa += (number[i] * number[i]);
-        }
-        return summa;
-//        return number.stream()
-//                .reduce(0, (sum, b) -> {
-//                    return sum + b * b;
-//                });
-    }
 
     private String toNumber() {
         if (currentLength >= 100) {

@@ -48,4 +48,26 @@ public class SumDigitTest {
         Assert.assertEquals(actual, expected);
     }
 
+    @Test
+    public void testFromSite() {
+        int valueSum = 16;
+        int valueMulti = 106;
+        Finder foo = new Finder(valueSum, valueMulti);
+        String actual = foo.findNumber();
+        String expected = "349";
+
+        Assert.assertEquals(actual, expected);
+    }
+
+    @Test
+    public void testFromSite2() {
+        int valueSum = 808;
+        int valueMulti =  6464;
+        Finder foo = new Finder(valueSum, valueMulti);
+        String actual = foo.findNumber();
+        String expected = "No solution";
+
+        Assert.assertEquals(actual, expected);
+    }
+
 }
