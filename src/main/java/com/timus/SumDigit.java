@@ -1,6 +1,8 @@
 package com.timus;
 
 import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SumDigit {
     static private StreamTokenizer in;
@@ -43,11 +45,14 @@ class Finder {
     private int currentSumma = 0;
     private int currentSumDbl = 0;
 
+    private Map<Integer, Integer> hashmap;
+
     public Finder(int summa, int multiply) {
         this.valueSumma = summa;
         this.valueMultiply = multiply;
         this.currentLength = 0;
         this.number = new int[101];
+        hashmap = new HashMap<>();
     }
 
     protected String findNumber() {
@@ -55,6 +60,11 @@ class Finder {
             return "No solution";
         }
 
+        for (int i = 0; i < 10; i++) {
+            hashmap.put(i, i*i);
+        }
+
+        currentLength = valueSumma / 9 - 1;
         while ((currentSumDbl != valueMultiply || currentSumma != valueSumma) && currentLength < 100) {
             number = nextFind();
         }
@@ -66,16 +76,19 @@ class Finder {
         for (int i = 0; i <= currentLength; i++) {
             if(number[i] != 9) {
                 if (currentSumDbl < valueMultiply && currentSumma < valueSumma) {
+                    currentSumDbl = currentSumDbl - hashmap.get(number[i]);
+
                     ++number[i];
                     ++currentSumma;
-                    currentSumDbl = currentSumDbl - ((number[i] - 1) * (number[i]-1)) + number[i] * number[i];
+
+                    currentSumDbl = currentSumDbl + hashmap.get(number[i]);
 
                     needMore = false;
                     break;
                 }
             }
             currentSumma = currentSumma - number[i];
-            currentSumDbl = currentSumDbl - number[i] * number[i];
+            currentSumDbl = currentSumDbl - hashmap.get(number[i]);
             number[i] = 0;
         }
         if (needMore) {
