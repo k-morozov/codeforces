@@ -56,7 +56,9 @@ class Finder {
     }
 
     protected String findNumber() {
-        if (valueMultiply < valueSumma) {
+        if (valueMultiply < valueSumma
+                || (valueMultiply!=0 && valueSumma ==0)
+                || (valueMultiply==0 && valueSumma!=0)) {
             return "No solution";
         }
 
